@@ -36,3 +36,17 @@
 * **The nvcc compiler requires the `.cu` file extension to understand the CUDA commands** 
 
 A worked example is [here](https://docs.google.com/document/d/1xhdO4oUoXed0ohp-9PlcrINXLj68S44Dio3MW1ZdzXw/edit), and the associated files are in this repository in the Task1 folder
+
+* There are a series of CUDA libraries available [here](https://developer.nvidia.com/tools-ecosystem) on the nvidia website, such as CUDA versions of FFTW and BLAS. There are also containerised applications that can be run through singularity on the HPCs.
+
+* **nvcc** does not work well with _all_ compilers. The list is in the documentation _somewhere_ and is difficult to find.
+
+## Part 3 - CUDA memory management
+
+* Kernel calls are non-blocking. This means that to best use the available resources you must implement blocking manually.
+* You can use cudaThreadSynchronise() from the host to block until GPU kernels have completed
+* syncthreads() can be used inside the kernel to synchronise between threads within the same block.
+* You cannot synchronise between threads in the same block, but a kernel exit will necessarily guarantee synchronisation
+* Memory management in cuda is based mainly on remembering that **the shared memory for GPU threads is different than the memory usedf by the host**
+
+
