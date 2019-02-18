@@ -1,0 +1,23 @@
+## WARNING!
+## The current directory is in your home directory. Please use the high-performance
+## cluster filesystem /nobackup. See documentation for information.
+## WARNING!
+
+## Hosts assigned to job 912081.1:
+##
+## db12gpu1.arc3.leeds.ac.uk 12 slots
+##
+## Resources granted:
+##
+## h_vmem = 5726623061 (per slot)
+## h_rt   = 00:10:00
+## disk   = 1G (per slot)
+
+[[ -9.66300189e-01   1.96301925e+00  -1.48200881e+00  -1.77219951e+00]
+ [  1.68391585e-03   2.81806087e+00   3.68028939e-01  -1.20389831e+00]
+ [  1.78936362e+00   3.38126636e+00  -5.12589104e-02  -7.32733309e-01]
+ [ -3.27551603e+00  -4.90762860e-01   2.21274662e+00   8.06889236e-02]]
+[[ -4.83150095e-01   9.81509626e-01  -7.41004407e-01  -8.86099756e-01]
+ [  8.41957924e-04   1.40903044e+00   1.84014469e-01  -6.01949155e-01]
+ [  8.94681811e-01   1.69063318e+00  -2.56294552e-02  -3.66366655e-01]
+ [ -1.63775802e+00  -2.45381430e-01   1.10637331e+00   4.03444618e-02]]
