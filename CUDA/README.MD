@@ -35,4 +35,4 @@
 * Location in threads or grids of processors (low level control) held as `dim3` variable.
 * **The nvcc compiler requires the `.cu` file extension to understand the CUDA commands** 
 
-A worked example is [here](https://docs.google.com/document/d/1xhdO4oUoXed0ohp-9PlcrINXLj68S44Dio3MW1ZdzXw/edit)
+A worked example is [here](https://docs.google.com/document/d/1xhdO4oUoXed0ohp-9PlcrINXLj68S44Dio3MW1ZdzXw/edit), and the associated files are in this repository in the Task1 folder
