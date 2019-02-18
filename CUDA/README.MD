@@ -33,3 +33,6 @@
   * Single kernel (computational function) operates on each element
 * CUDA has new vector types `dim2, dim3, dim4` for _n_ dimensional data.
 * Location in threads or grids of processors (low level control) held as `dim3` variable.
+* **The nvcc compiler requires the `.cu` file extension to understand the CUDA commands** 
+
+A worked example is [here](https://docs.google.com/document/d/1xhdO4oUoXed0ohp-9PlcrINXLj68S44Dio3MW1ZdzXw/edit)
