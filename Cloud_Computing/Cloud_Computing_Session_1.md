@@ -24,3 +24,5 @@ gcloud compute --project=swd4-cloud-computing firewall-rules create default-allo
 
 gcloud compute --project=swd4-cloud-computing firewall-rules create default-allow-https --direction=INGRESS --priority=1000 --network=default --action=ALLOW --rules=tcp:443 --source-ranges=0.0.0.0/0 --target-tags=https-server
 ```
+
+Virtual Machines are at the centre of Cloud computing. There are instructions for setting up a VM [here](https://docs.google.com/document/d/1BdKBTSyRhvDHGik-i_hmaz6iyCbFDbGMVs8bMIMfWO0) with instructions on how to set up a GUI for the operating system [here](https://medium.com/google-cloud/graphical-user-interface-gui-for-google-compute-engine-instance-78fccda09e5c)
