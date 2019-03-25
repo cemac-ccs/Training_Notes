@@ -12,3 +12,6 @@ Things that slow down code include:
 
 Tips:
 * Numpy arrays do not need nested loops
+* If you have imported compiled versions of code, python will look for the compiled version first.
+
+
