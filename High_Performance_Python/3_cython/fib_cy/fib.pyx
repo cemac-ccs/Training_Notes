@@ -1,9 +1,8 @@
-def fib(n):
+def fib(int n):
     """Print the Fibonacci series up to n."""
+
+    cdef int a, b
     a, b = 0, 1
     while b < n:
-        print (b)
         a, b = b, a + b
-
-if __name__=="__main__":
-    fib(200)
+    print ("%dth Fibonacci number is %d" % (n,b))
