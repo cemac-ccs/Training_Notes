@@ -13,5 +13,11 @@ Things that slow down code include:
 Tips:
 * Numpy arrays do not need nested loops
 * If you have imported compiled versions of code, python will look for the compiled version first.
+* When interfacing different types of python use the exec command.
+* Julia is good for deep learning type applications
 
-
+Main process for improving code:
+* Profile code - getting rid of bottlenecks will give the biggest speedup
+* Improve algorithms based on profile
+* Compilation processes (numba, cython)
+* Possibly consider things like f2py for integrating legacy code
