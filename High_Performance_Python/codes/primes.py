@@ -1,3 +1,6 @@
+import math
+
+@profile
 def primes(n):
     if n==2:
         return [2]
@@ -5,7 +8,7 @@ def primes(n):
         return []
 
     s=list(range(3,n+1,2))
-    mroot = n ** 0.5
+    mroot = math.sqrt(n)
     half=(n+1)//2-1
     i=0
     m=3
@@ -21,5 +24,5 @@ def primes(n):
         m=2*i+3
     return [2]+[x for x in s if x]
 
-#print (primes(100))
-primes(100)
+print (primes(100))
+#primes(100)
