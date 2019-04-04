@@ -3,26 +3,24 @@ program fd1d_heat_explicit_prb
 
   implicit none
 
-  integer :: t_num
-  parameter (t_num=201)
-  integer :: x_num
-  parameter (x_num=21)
+  integer, parameter :: t_num=201
+  integer, parameter :: x_num=21
 
   real (kind=dp) :: cfl
   real (kind=dp) :: dt
-  real (kind=dp) :: h(x_num)
-  real (kind=dp) :: h_new(x_num)
+  real (kind=dp), allocatable :: h(:)
+  real (kind=dp), allocatable :: h_new(:)
 ! the "matrix" stores all x-values for all t-values
 ! remember Fortran is column major, meaning that rows are contiguous
-  real (kind=dp) :: hmat(x_num, t_num)
+  real (kind=dp), allocatable :: hmat(:,:)
   integer :: i
   integer :: j
   real (kind=dp) :: k
 
-  real (kind=dp) :: t(t_num)
+  real (kind=dp), allocatable :: t(:)
   real (kind=dp) :: t_max
   real (kind=dp) :: t_min
-  real (kind=dp) :: x(x_num)
+  real (kind=dp), allocatable :: x(:)
   real (kind=dp) :: x_max
   real (kind=dp) :: x_min
 
@@ -52,6 +50,8 @@ program fd1d_heat_explicit_prb
   x_min = 0.0e+00_dp
   x_max = 1.0e+00_dp
 ! x_num is the number of intervals in the x-direction
+
+  allocate (x(x_num), stat=ierr, errmsg="Problem allocating x variable")
   call r8vec_linspace(x_num, x_min, x_max, x)
 
 ! the t-range values. integrate from t_min to t_max
@@ -60,6 +60,7 @@ program fd1d_heat_explicit_prb
 
 ! t_num is the number of intervals in the t-direction
   dt = (t_max-t_min)/real(t_num-1, kind=dp)
+  allocate(t(t_num), stat=ierr, errmsg="Problem allocating t variable")
   call r8vec_linspace(t_num, t_min, t_max, t)
 
 ! get the CFL coefficient
@@ -74,6 +75,8 @@ program fd1d_heat_explicit_prb
     stop
   end if
 
+allocate(h(x_num), stat=ierr, errmsg="Problem allocating h array")
+
 ! set the initial condition
   do j = 1, x_num
     h(j) = 50.0e+00_dp
@@ -84,11 +87,17 @@ program fd1d_heat_explicit_prb
   h(x_num) = 70.0e+00_dp
 
 ! initialise the matrix to the initial condition
+
+  allocate(hmat(x_num,t_num), stat=ierr, errmsg="Problem allocating hmat matrix")
+
   do i = 1, x_num
     hmat(i, 1) = h(i)
   end do
 
-! the main time integration loop 
+! the main time integration loop
+
+  allocate(h_new(x_num), stat=ierr, errmsg="Problem allocating h_new array")
+
   do j = 2, t_num
     call fd1d_heat_explicit(x_num, x, t(j-1), dt, cfl, h, h_new)
 
@@ -98,19 +107,26 @@ program fd1d_heat_explicit_prb
     end do
   end do
 
+  deallocate (h, stat=ierr, errmsg="Problem deallocating h array")
+  deallocate (h_new, stat=ierr, errmsg="Problem deallocating h array")
+
 ! write data to files
   call r8mat_write('h_test01.txt', x_num, t_num, hmat)
   call r8vec_write('t_test01.txt', t_num, t)
   call r8vec_write('x_test01.txt', x_num, x)
+
+  deallocate (hmat, stat=ierr, errmsg="Problem deallocating hmat matrix")
+  deallocate (x, stat=ierr, errmsg="Problem deallocating x array")
+  deallocate (t, stat=ierr, errmsg="Problem deallocating t array")
 
 contains
 
   function func(j, x_num, x) result (d)
     implicit none
 
-    integer :: j, x_num
-    real (kind=dp) :: d
-    real (kind=dp) :: x(x_num)
+    integer, intent(in) :: j, x_num
+    real (kind=dp), intent(out) :: d
+    real (kind=dp), intent(in) :: x(x_num)
 
     d = 0.0e+00_dp
   end function
@@ -118,15 +134,15 @@ contains
   subroutine fd1d_heat_explicit(x_num, x, t, dt, cfl, h, h_new)
     implicit none
 
-    integer :: x_num
+    integer, intent(in) :: x_num
 
-    real (kind=dp) :: cfl
-    real (kind=dp) :: dt
-    real (kind=dp) :: h(x_num)
-    real (kind=dp) :: h_new(x_num)
+    real (kind=dp), intent(in) :: cfl
+    real (kind=dp), intent(in) :: dt
+    real (kind=dp), intent(in) :: h(x_num)
+    real (kind=dp), intent(out) :: h_new(x_num)
     integer :: j
-    real (kind=dp) :: t
-    real (kind=dp) :: x(x_num)
+    real (kind=dp), intent(in) :: t
+    real (kind=dp), intent(in) :: x(x_num)
     real (kind=dp) :: f(x_num)
 
     do j = 1, x_num
@@ -149,16 +165,16 @@ contains
 
     implicit none
 
-    real (kind=dp) :: cfl
+    real (kind=dp), intent(out) :: cfl
     real (kind=dp) :: dx
     real (kind=dp) :: dt
-    real (kind=dp) :: k
-    real (kind=dp) :: t_max
-    real (kind=dp) :: t_min
-    integer :: t_num
-    real (kind=dp) :: x_max
-    real (kind=dp) :: x_min
-    integer :: x_num
+    real (kind=dp), intent(in) :: k
+    real (kind=dp), intent(in) :: t_max
+    real (kind=dp), intent(in) :: t_min
+    integer, intent(in) :: t_num
+    real (kind=dp), intent(in) :: x_max
+    real (kind=dp), intent(in) :: x_min
+    integer, intent(in) :: x_num
 
     dx = (x_max-x_min)/real(x_num-1, kind=dp)
     dt = (t_max-t_min)/real(t_num-1, kind=dp)
@@ -173,14 +189,14 @@ contains
   subroutine r8mat_write(output_filename, m, n, table)
     implicit none
 
-    integer :: m
-    integer :: n
+    integer, intent(in) :: m
+    integer, intent(in) :: n
 
     integer :: j
-    character (len=*) :: output_filename
+    character (len=*), intent(in) :: output_filename
     integer :: output_unit_id
     character (len=30) :: string
-    real (kind=dp) :: table(m, n)
+    real (kind=dp), intent(in) :: table(m, n)
 
     output_unit_id = 10
     open (unit=output_unit_id, file=output_filename, status='replace')
@@ -198,10 +214,10 @@ contains
 
     implicit none
 
-    integer :: n
-    real (kind=dp) :: a(n)
-    real (kind=dp) :: a_first
-    real (kind=dp) :: a_last
+    integer, intent(in) :: n
+    real (kind=dp), intent(out) :: a(n)
+    real (kind=dp), intent(in) :: a_first
+    real (kind=dp), intent(in) :: a_last
     integer :: i
 
     do i = 1, n
@@ -216,12 +232,12 @@ contains
     implicit none
 
     integer :: m
-    integer :: n
+    integer, intent(in) :: n
 
     integer :: j
-    character (len=*) :: output_filename
+    character (len=*), intent(in) :: output_filename
     integer :: output_unit_id
-    real (kind=dp) :: x(n)
+    real (kind=dp), intent(in) :: x(n)
 
     output_unit_id = 11
     open (unit=output_unit_id, file=output_filename, status='replace')
