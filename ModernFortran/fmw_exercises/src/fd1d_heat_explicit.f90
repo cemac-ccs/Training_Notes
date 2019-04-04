@@ -56,7 +56,7 @@ program fd1d_heat_explicit_prb
   if (ierr /= 0) then
     print *,"Problem allocating x array"
   end if
-  call r8vec_linspace(x_num, x_min, x_max, x)
+  call r8vec_linspace(x_min, x_max, x)
 
 ! the t-range values. integrate from t_min to t_max
   t_min = 0.0e+00_dp
@@ -115,7 +115,7 @@ end if
   end if
 
   do j = 2, t_num
-    call fd1d_heat_explicit(x_num, x, t(j-1), dt, cfl, h, h_new)
+    call fd1d_heat_explicit(x, t(j-1), dt, cfl, h, h_new)
 
     do i = 1, x_num
       hmat(i, j) = h_new(i)
@@ -133,9 +133,9 @@ end if
   end if
 
 ! write data to files
-  call r8mat_write('h_test01.txt', x_num, t_num, hmat)
-  call r8vec_write('t_test01.txt', t_num, t)
-  call r8vec_write('x_test01.txt', x_num, x)
+  call r8mat_write('h_test01.txt', hmat)
+  call r8vec_write('t_test01.txt', t)
+  call r8vec_write('x_test01.txt', x)
 
   deallocate (hmat, stat=ierr)
   if (ierr /= 0) then
@@ -152,32 +152,30 @@ end if
 
 contains
 
-  function func(j, x_num, x) result (d)
+  function func(j, x) result (d)
     implicit none
 
-    integer, intent(in) :: j, x_num
-    real (kind=dp), intent(out) :: d
-    real (kind=dp), intent(in) :: x(x_num)
+    integer, intent(in) :: j
+    real (kind=dp) :: d
+    real (kind=dp), dimension(:), intent(in) :: x
 
     d = 0.0e+00_dp
   end function
 
-  subroutine fd1d_heat_explicit(x_num, x, t, dt, cfl, h, h_new)
+  subroutine fd1d_heat_explicit(x, t, dt, cfl, h, h_new)
     implicit none
-
-    integer, intent(in) :: x_num
 
     real (kind=dp), intent(in) :: cfl
     real (kind=dp), intent(in) :: dt
-    real (kind=dp), intent(in) :: h(x_num)
-    real (kind=dp), intent(out) :: h_new(x_num)
+    real (kind=dp), dimension(:), intent(in) :: h
+    real (kind=dp), dimension(:), intent(out) :: h_new
     integer :: j
     real (kind=dp), intent(in) :: t
-    real (kind=dp), intent(in) :: x(x_num)
-    real (kind=dp) :: f(x_num)
+    real (kind=dp), dimension(:), intent(in) :: x
+    real (kind=dp) :: f(size(x))
 
     do j = 1, x_num
-      f(j) = func(j, x_num, x)
+      f(j) = func(j, x)
     end do
 
     h_new(1) = 0.0e+00_dp
@@ -217,22 +215,25 @@ contains
 
   end subroutine
 
-  subroutine r8mat_write(output_filename, m, n, table)
+  subroutine r8mat_write(output_filename, table)
     implicit none
 
-    integer, intent(in) :: m
-    integer, intent(in) :: n
+    integer :: m
+    integer :: n
 
     integer :: j
     character (len=*), intent(in) :: output_filename
     integer :: output_unit_id
     character (len=30) :: string
-    real (kind=dp), intent(in) :: table(m, n)
+    real (kind=dp), dimension(:,:), intent(in) :: table
 
     output_unit_id = 10
     open (unit=output_unit_id, file=output_filename, status='replace')
 
     write (string, '(a1,i8,a1,i8,a1,i8,a1)') '(', m, 'g', 24, '.', 16, ')'
+
+    m = size( table(:,:),1 )
+    n = size( table(:,:),2 )
 
     do j = 1, n
       write (output_unit_id, string) table(1:m, j)
@@ -241,15 +242,17 @@ contains
     close (unit=output_unit_id)
   end subroutine
 
-  subroutine r8vec_linspace(n, a_first, a_last, a)
+  subroutine r8vec_linspace(a_first, a_last, a)
 
     implicit none
 
-    integer, intent(in) :: n
-    real (kind=dp), intent(out) :: a(n)
+    integer :: n
+    real (kind=dp), intent(out), dimension(:) :: a
     real (kind=dp), intent(in) :: a_first
     real (kind=dp), intent(in) :: a_last
     integer :: i
+
+    n = size( a )
 
     do i = 1, n
       a(i) = (real(n-i,kind=dp)*a_first+real(i-1,kind=dp)*a_last)/ &
@@ -258,20 +261,21 @@ contains
 
   end subroutine
 
-  subroutine r8vec_write(output_filename, n, x)
+  subroutine r8vec_write(output_filename, x)
 
     implicit none
 
     integer :: m
-    integer, intent(in) :: n
-
+    integer :: n
     integer :: j
     character (len=*), intent(in) :: output_filename
     integer :: output_unit_id
-    real (kind=dp), intent(in) :: x(n)
+    real (kind=dp), dimension(:), intent(in) :: x
 
     output_unit_id = 11
     open (unit=output_unit_id, file=output_filename, status='replace')
+
+    n = size( x )
 
     do j = 1, n
       write (output_unit_id, '(2x,g24.16)') x(j)
