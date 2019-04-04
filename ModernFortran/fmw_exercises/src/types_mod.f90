@@ -4,7 +4,7 @@ module types_mod
   implicit none
   ! everything is private unless otherwise stated
   private
-  public :: SP
+  public :: SP, DP, SI, DI
 
   integer, parameter :: SP = REAL32
   integer, parameter :: DP = REAL64
