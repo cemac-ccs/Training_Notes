@@ -15,6 +15,7 @@ program fd1d_heat_explicit_prb
   real (kind=dp), allocatable :: hmat(:,:)
   integer :: i
   integer :: j
+  integer :: ierr
   real (kind=dp) :: k
 
   real (kind=dp), allocatable :: t(:)
@@ -51,7 +52,10 @@ program fd1d_heat_explicit_prb
   x_max = 1.0e+00_dp
 ! x_num is the number of intervals in the x-direction
 
-  allocate (x(x_num), stat=ierr, errmsg="Problem allocating x variable")
+  allocate (x(x_num), stat=ierr)
+  if (ierr /= 0) then
+    print *,"Problem allocating x array"
+  end if
   call r8vec_linspace(x_num, x_min, x_max, x)
 
 ! the t-range values. integrate from t_min to t_max
@@ -60,7 +64,10 @@ program fd1d_heat_explicit_prb
 
 ! t_num is the number of intervals in the t-direction
   dt = (t_max-t_min)/real(t_num-1, kind=dp)
-  allocate(t(t_num), stat=ierr, errmsg="Problem allocating t variable")
+  allocate(t(t_num), stat=ierr)
+  if (ierr /= 0) then
+    print *,"Problem allocating t array"
+  end if
   call r8vec_linspace(t_num, t_min, t_max, t)
 
 ! get the CFL coefficient
@@ -75,7 +82,10 @@ program fd1d_heat_explicit_prb
     stop
   end if
 
-allocate(h(x_num), stat=ierr, errmsg="Problem allocating h array")
+allocate(h(x_num), stat=ierr)
+if (ierr /= 0) then
+  print *,"Problem allocating h array"
+end if
 
 ! set the initial condition
   do j = 1, x_num
@@ -88,7 +98,10 @@ allocate(h(x_num), stat=ierr, errmsg="Problem allocating h array")
 
 ! initialise the matrix to the initial condition
 
-  allocate(hmat(x_num,t_num), stat=ierr, errmsg="Problem allocating hmat matrix")
+  allocate(hmat(x_num,t_num), stat=ierr)
+  if (ierr /= 0) then
+    print *,"Problem allocating hmat matrix"
+  end if
 
   do i = 1, x_num
     hmat(i, 1) = h(i)
@@ -96,7 +109,10 @@ allocate(h(x_num), stat=ierr, errmsg="Problem allocating h array")
 
 ! the main time integration loop
 
-  allocate(h_new(x_num), stat=ierr, errmsg="Problem allocating h_new array")
+  allocate(h_new(x_num), stat=ierr)
+  if (ierr /= 0) then
+    print *,"Problem allocating h_new array"
+  end if
 
   do j = 2, t_num
     call fd1d_heat_explicit(x_num, x, t(j-1), dt, cfl, h, h_new)
@@ -107,17 +123,32 @@ allocate(h(x_num), stat=ierr, errmsg="Problem allocating h array")
     end do
   end do
 
-  deallocate (h, stat=ierr, errmsg="Problem deallocating h array")
-  deallocate (h_new, stat=ierr, errmsg="Problem deallocating h array")
+  deallocate (h, stat=ierr)
+  if (ierr /= 0) then
+    print *,"Problem deallocating h array"
+  end if
+  deallocate (h_new, stat=ierr)
+  if (ierr /= 0) then
+    print *,"Problem deallocating h_new array"
+  end if
 
 ! write data to files
   call r8mat_write('h_test01.txt', x_num, t_num, hmat)
   call r8vec_write('t_test01.txt', t_num, t)
   call r8vec_write('x_test01.txt', x_num, x)
 
-  deallocate (hmat, stat=ierr, errmsg="Problem deallocating hmat matrix")
-  deallocate (x, stat=ierr, errmsg="Problem deallocating x array")
-  deallocate (t, stat=ierr, errmsg="Problem deallocating t array")
+  deallocate (hmat, stat=ierr)
+  if (ierr /= 0) then
+    print *,"Problem deallocating hmat matrix"
+  end if
+  deallocate (x, stat=ierr)
+  if (ierr /= 0) then
+    print *,"Problem deallocating x array"
+  end if
+  deallocate (t, stat=ierr)
+  if (ierr /= 0) then
+    print *,"Problem deallocating t array"
+  end if
 
 contains
 
