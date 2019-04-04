@@ -68,7 +68,7 @@ program fd1d_heat_explicit_prb
   if (ierr /= 0) then
     print *,"Problem allocating t array"
   end if
-  call r8vec_linspace(t_num, t_min, t_max, t)
+  call r8vec_linspace(t_min, t_max, t)
 
 ! get the CFL coefficient
   call fd1d_heat_explicit_cfl(k, t_num, t_min, t_max, x_num, x_min, x_max, &
