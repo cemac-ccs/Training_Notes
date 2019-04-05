@@ -1,4 +1,5 @@
 module cfl_mod
+  use :: types_mod, only: dp
 
   implicit none
 

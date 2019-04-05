@@ -1,4 +1,5 @@
 module io_mod
+  use :: types_mod, only: dp
 
   implicit none
 
