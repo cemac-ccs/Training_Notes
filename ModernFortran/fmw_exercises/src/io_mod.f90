@@ -28,7 +28,7 @@ contains
     n = size( table(:,:),2 )
 
     do j = 1, n
-      write (output_unit_id, string) table(1:m, j)
+      write (output_unit_id, string) table(:, j)
     end do
 
     print *, table(1,:)
