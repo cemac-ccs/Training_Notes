@@ -22,13 +22,13 @@ contains
     output_unit_id = 10
     open (unit=output_unit_id, file=output_filename, status='replace')
 
+    m = size( table(:,:), 1 )
+    n = size( table(:,:), 2 )
+
     write (string, '(a1,i8,a1,i8,a1,i8,a1)') '(', m, 'g', 24, '.', 16, ')'
 
-    m = size( table(:,:),1 )
-    n = size( table(:,:),2 )
-
     do j = 1, n
-      write (output_unit_id, string) table(:, j)
+      write (output_unit_id, string) table(1:m, j)
     end do
 
     print *, table(1,:)
