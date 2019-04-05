@@ -28,13 +28,13 @@ contains
 
     h_new(1) = 0.0e+00_dp
 
-    do j = 2, n - 1
+    do j = 2, size(x) - 1
       h_new(j) = h(j) + dt*f(j) + cfl*(h(j-1)-2.0e+00_dp*h(j)+h(j+1))
     end do
 
 ! set the boundary conditions again
     h_new(1) = 90.0e+00_dp
-    h_new(n) = 70.0e+00_dp
+    h_new(size(x)) = 70.0e+00_dp
   end subroutine
 
 end module solver_mod

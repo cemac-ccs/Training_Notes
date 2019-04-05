@@ -57,7 +57,6 @@ contains
 
     implicit none
 
-    integer :: m
     integer :: n
     integer :: j
     character (len=*), intent(in) :: output_filename
