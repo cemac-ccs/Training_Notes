@@ -14,24 +14,26 @@ contains
     real (kind=dp), intent(in) :: dt
     real (kind=dp), dimension(:), intent(in) :: h
     real (kind=dp), dimension(:), intent(out) :: h_new
-    integer :: j
+    integer :: j, n
     real (kind=dp), intent(in) :: t
     real (kind=dp), dimension(:), intent(in) :: x
     real (kind=dp) :: f(size(x))
 
-    do j = 1, x_num
+    n = size(x)
+
+    do j = 1, size(x)
       f(j) = func(j, x)
     end do
 
     h_new(1) = 0.0e+00_dp
 
-    do j = 2, x_num - 1
+    do j = 2, n - 1
       h_new(j) = h(j) + dt*f(j) + cfl*(h(j-1)-2.0e+00_dp*h(j)+h(j+1))
     end do
 
 ! set the boundary conditions again
     h_new(1) = 90.0e+00_dp
-    h_new(x_num) = 70.0e+00_dp
+    h_new(n) = 70.0e+00_dp
   end subroutine
 
 end module solver_mod
