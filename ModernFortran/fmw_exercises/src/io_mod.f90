@@ -31,8 +31,6 @@ contains
       write (output_unit_id, string) table(1:m, j)
     end do
 
-    print *, table(1,:)
-
     close (unit=output_unit_id)
   end subroutine
 
