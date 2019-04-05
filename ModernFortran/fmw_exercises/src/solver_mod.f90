@@ -1,5 +1,6 @@
 module solver_mod
   use :: types_mod, only: dp
+  use rhs_mod
 
   implicit none
 
