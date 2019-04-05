@@ -29,6 +29,7 @@ contains
 
     do j = 1, n
       write (output_unit_id, string) table(1:m, j)
+      print *, table(:,1)
     end do
 
     close (unit=output_unit_id)
