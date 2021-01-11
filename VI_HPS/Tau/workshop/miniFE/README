@@ -1,0 +1,35 @@
+To use miniFE with TAU:
+
+source /usr/global/tools/tau/training/tau.bashrc
+
+cd src
+make clean
+make
+
+On Quartz.llnl.gov
+salloc -N 1 -p pdebug
+cat ./r
+#!/bin/bash
+export OMP_NUM_THREADS=4
+srun -n 4 ./miniFE.x  nx=100 ny=100 nz=1000
+
+bash-4.2$ ./r
+and to use it with TAU:
+cat rt
+#!/bin/bash
+export OMP_NUM_THREADS=4
+export TAU_OMPT_SUPPORT_LEVEL=full
+
+/bin/rm -f profile* MULT*
+srun -n 4 tau_exec -T mpi,openmp,ompt,v5 -ompt -ebs ./miniFE.x nx=100 ny=100 nz=1000
+
+
+bash-4.2$ ./rt
+bash-4.2$ pprof -a
+bash-4.2$ paraprof
+
+paraprof --pack minife.ppk 
+scp minife.ppk <laptop>: 
+paraprof minife.ppk 
+on your laptop.
+

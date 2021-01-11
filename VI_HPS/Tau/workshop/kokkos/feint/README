@@ -1,0 +1,7 @@
+Please use:
+
+make
+export OMP_PROC_BIND=1 
+tau_exec -T ompt,tr6,serial -ompt ./KokkosExample_Feint
+pprof
+paraprof 

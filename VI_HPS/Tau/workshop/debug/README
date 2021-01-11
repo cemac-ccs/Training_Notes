@@ -1,0 +1,19 @@
+You may use TAU to identify the location of a program crash. 
+
+First compile and run without TAU:
+% make
+% salloc -N 1 --time=45
+% mpirun -np 4 ./foo
+% mpirun -np 4 
+
+see the output. 
+
+This uses runtime preloading of the TAU library to instrument the application.
+You may also uncomment #CC= ...tau_cc.sh in the Makefile (and comment CC=mpicc -g) to use TAU to compile the code and then you may use the normal mpirun command to run the instrumented code to generate the backtrace. 
+
+% export TAU_TRACK_SIGNALS=1
+% mpirun -np 4 ./foo
+% paraprof
+
+to view the results in either case.
+

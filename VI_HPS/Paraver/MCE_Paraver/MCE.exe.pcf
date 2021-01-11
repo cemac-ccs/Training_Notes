@@ -1,0 +1,357 @@
+DEFAULT_OPTIONS
+
+LEVEL               THREAD
+UNITS               NANOSEC
+LOOK_BACK           100
+SPEED               1
+FLAG_ICONS          ENABLED
+NUM_OF_STATE_COLORS 1000
+YMAX_SCALE          37
+
+
+DEFAULT_SEMANTIC
+
+THREAD_FUNC          State As Is
+
+
+STATES
+0    Idle
+1    Running
+2    Not created
+3    Waiting a message
+4    Blocking Send
+5    Synchronization
+6    Test/Probe
+7    Scheduling and Fork/Join
+8    Wait/WaitAll
+9    Blocked
+10    Immediate Send
+11    Immediate Receive
+12    I/O
+13    Group Communication
+14    Tracing Disabled
+15    Others
+16    Send Receive
+17    Memory transfer
+18    Profiling
+19    On-line analysis
+20    Remote memory access
+21    Atomic memory operation
+22    Memory ordering operation
+23    Distributed locking
+24    Overhead
+25    One-sided op
+26    Startup latency
+27    Waiting links
+28    Data copy
+29    RTT
+30    Allocating memory
+31    Freeing memory
+
+
+STATES_COLOR
+0    {117,195,255}
+1    {0,0,255}
+2    {255,255,255}
+3    {255,0,0}
+4    {255,0,174}
+5    {179,0,0}
+6    {0,255,0}
+7    {255,255,0}
+8    {235,0,0}
+9    {0,162,0}
+10    {255,0,255}
+11    {100,100,177}
+12    {172,174,41}
+13    {255,144,26}
+14    {2,255,177}
+15    {192,224,0}
+16    {66,66,66}
+17    {255,0,96}
+18    {169,169,169}
+19    {169,0,0}
+20    {0,109,255}
+21    {200,61,68}
+22    {200,66,0}
+23    {0,41,0}
+24    {139,121,177}
+25    {116,116,116}
+26    {200,50,89}
+27    {255,171,98}
+28    {0,68,189}
+29    {52,43,0}
+30    {255,46,0}
+31    {100,216,32}
+
+
+EVENT_TYPE
+0 60000001  Parallel (OMP)
+VALUES
+0 close
+1 DO (open)
+2 SECTIONS (open)
+3 REGION (open)
+
+EVENT_TYPE
+0    60000018    Executed OpenMP parallel function
+VALUES
+0   End
+1 Unresolved
+2 _NOT_Found
+3 MAIN__._omp_fn.0
+
+
+EVENT_TYPE
+0    60000118    Executed OpenMP parallel function line and file
+VALUES
+0   End
+1 0 (Unresolved)
+2 0 (_NOT_Found)
+3 0 (MainMCE.f90, MCE.exe)
+
+
+EVENT_TYPE
+0    60000023    Executed OpenMP task function
+VALUES
+0   End
+1 Unresolved
+2 _NOT_Found
+3 MAIN__._omp_fn.0
+
+
+EVENT_TYPE
+0    60000123    Executed OpenMP task function line and file
+VALUES
+0   End
+1 0 (Unresolved)
+2 0 (_NOT_Found)
+3 0 (MainMCE.f90, MCE.exe)
+
+
+EVENT_TYPE
+0    60000024    Instantiated OpenMP task function
+VALUES
+0   End
+1 Unresolved
+2 _NOT_Found
+3 MAIN__._omp_fn.0
+
+
+EVENT_TYPE
+0    60000124    Instantiated OpenMP task function line and file
+VALUES
+0   End
+1 0 (Unresolved)
+2 0 (_NOT_Found)
+3 0 (MainMCE.f90, MCE.exe)
+
+
+EVENT_TYPE
+0 60000005 OpenMP barrier
+VALUES
+0 End
+1 Begin
+EVENT_TYPE
+0 65000000 Number of OpenMP instantiated tasks
+0 65000001 Number of OpenMP executed tasks
+
+EVENT_TYPE
+0    60000020    pthread function
+VALUES
+0   End
+1 Unresolved
+2 _NOT_Found
+3 MAIN__._omp_fn.0
+
+
+EVENT_TYPE
+0    60000120    pthread function line and file
+VALUES
+0   End
+1 0 (Unresolved)
+2 0 (_NOT_Found)
+3 0 (MainMCE.f90, MCE.exe)
+
+
+EVENT_TYPE
+6    40000033    Executing CPU
+6    40000133    CPU-Event sampling interval
+
+
+EVENT_TYPE
+6    40000001    Application
+VALUES
+0      End
+1      Begin
+
+
+EVENT_TYPE
+6    40000050    RAW clock() value from system
+
+
+EVENT_TYPE
+6    40000003    Flushing Traces
+VALUES
+0      End
+1      Begin
+
+
+EVENT_TYPE
+6    40000002    Trace initialization
+VALUES
+0      End
+1      Begin
+
+
+EVENT_TYPE
+6    40000036    Process IDentifier
+6    40000037    Parent Process IDentifier
+6    40000038    fork() depth
+
+
+EVENT_TYPE
+7  42000050 PAPI_TOT_INS [Instr completed]
+7  42000059 PAPI_TOT_CYC [Total cycles]
+7  41999999 Active hardware counter set
+
+
+GRADIENT_COLOR
+0    {0,255,2}
+1    {0,244,13}
+2    {0,232,25}
+3    {0,220,37}
+4    {0,209,48}
+5    {0,197,60}
+6    {0,185,72}
+7    {0,173,84}
+8    {0,162,95}
+9    {0,150,107}
+10    {0,138,119}
+11    {0,127,130}
+12    {0,115,142}
+13    {0,103,154}
+14    {0,91,166}
+
+
+GRADIENT_NAMES
+0    Gradient 0
+1    Grad. 1/MPI Events
+2    Grad. 2/OMP Events
+3    Grad. 3/OMP locks
+4    Grad. 4/User func
+5    Grad. 5/User Events
+6    Grad. 6/General Events
+7    Grad. 7/Hardware Counters
+8    Gradient 8
+9    Gradient 9
+10    Gradient 10
+11    Gradient 11
+12    Gradient 12
+13    Gradient 13
+14    Gradient 14
+
+
+EVENT_TYPE
+0 41000000 Object addresses for task 1.1
+VALUES
+1 options.197.5314 [0x0044d880-0x0044d89b]
+2 completed.7873 [0x006513e8-0x006513e8]
+3 init.4003 [0x00651420-0x00651423]
+4 pi.4004 [0x00651418-0x0065141f]
+5 rln2p.4005 [0x00651410-0x00651417]
+6 init.3900 [0x00651430-0x00651433]
+7 pi.3903 [0x00651428-0x0065142f]
+8 init.4113 [0x00651408-0x0065140b]
+9 spare.4170 [0x006513f8-0x006513ff]
+10 pi.4168 [0x00651400-0x00651407]
+11 jumptable.7.4067 [0x0044a720-0x0044a7bf]
+12 jumptable.54.4404 [0x0044a680-0x0044a71f]
+13 jumptable.78.4546 [0x0044a5e0-0x0044a67f]
+14 jumptable.90.4633 [0x0044a540-0x0044a5df]
+15 jumptable.94.4681 [0x0044a4a0-0x0044a53f]
+16 jumptable.98.4695 [0x0044a400-0x0044a49f]
+17 jumptable.169.4450 [0x0044cc20-0x0044ccbf]
+18 jumptable.461.7368 [0x0044ce20-0x0044cebf]
+19 jumptable.111.4903 [0x0044d7e0-0x0044d857]
+20 __FRAME_END__ [0x00450884-0x00450883]
+21 __GNU_EH_FRAME_HDR [0x0044e1e0-0x0044e1df]
+22 __globvars_MOD_in_nbf [0x00651534-0x00651537]
+23 __globvars_MOD_timestrt [0x00651470-0x00651477]
+24 __globvars_MOD_specden [0x006514a0-0x006514a2]
+25 __globvars_MOD_hbar [0x00651548-0x0065154f]
+26 __globvars_MOD_train_len [0x0065146c-0x0065146f]
+27 __globvars_MOD_lambda_dl [0x00651510-0x00651517]
+28 __globvars_MOD_restrtflg [0x006514b8-0x006514bb]
+29 __globvars_MOD_beta_sb [0x006515e8-0x006515ef]
+30 __globvars_MOD_swtrn_swrm [0x0065148c-0x0065148f]
+31 __globvars_MOD_mass_mp [0x00651500-0x00651507]
+32 __globvars_MOD_bfeps [0x006515e0-0x006515e7]
+33 __globvars_MOD_mu [0x006514f0-0x006514f7]
+34 __globvars_MOD_wc_dl [0x00651458-0x0065145f]
+35 __globvars_MOD_dtinit [0x006515b0-0x006515b7]
+36 __globvars_MOD_a0_mp [0x006515f8-0x006515ff]
+37 __globvars_MOD___vtab_globvars_Hamiltonian [0x004487e0-0x00448817]
+38 __globvars_MOD_gen [0x00651550-0x00651550]
+39 __globvars_MOD_qsce [0x006514c8-0x006514cf]
+40 __globvars_MOD_dtmin [0x006515a0-0x006515a7]
+41 __globvars_MOD_uplimnorm [0x00651460-0x00651467]
+42 __bss_start [0x006513e8-0x006513e7]
+43 __globvars_MOD_sqrtpi [0x00651498-0x0065149f]
+44 __globvars_MOD___def_init_globvars_Basisfn [0x004488c0-0x004489cf]
+45 __globvars_MOD_echeck [0x00651588-0x0065158c]
+46 _end [0x00651600-0x006515ff]
+47 __globvars_MOD_wmax_sb [0x00651438-0x0065143f]
+48 __globvars_MOD_method [0x006514f8-0x006514fc]
+49 __globvars_MOD_ndim [0x006514e8-0x006514eb]
+50 __globvars_MOD_pirl [0x006514d8-0x006514df]
+51 __globvars_MOD_npes [0x006514e4-0x006514e7]
+52 zbqlbd01_ [0x006513f0-0x006513f7]
+53 __globvars_MOD_initalcmprss [0x00651528-0x0065152f]
+54 __globvars_MOD_i [0x00651538-0x00651547]
+55 __globvars_MOD_dtmax [0x006515a8-0x006515af]
+56 __globvars_MOD_prop [0x006514d0-0x006514d0]
+57 __globvars_MOD_clonefreq [0x006515d4-0x006515d7]
+58 __globvars_MOD_wc_exp [0x00651450-0x00651457]
+59 __globvars_MOD_randfunc [0x006514c0-0x006514c3]
+60 __globvars_MOD_delta_sb [0x006515c0-0x006515c7]
+61 __globvars_MOD_lowlimnorm [0x00651508-0x0065150f]
+62 __globvars_MOD_trainsp [0x00651468-0x0065146b]
+63 __globvars_MOD___vtab_globvars_Basisfn [0x00448820-0x00448857]
+64 __globvars_MOD_step [0x00651490-0x00651490]
+65 __globvars_MOD_initsp [0x00651520-0x00651527]
+66 __globvars_MOD_ntries [0x006514e0-0x006514e3]
+67 __globvars_MOD_ebfmax [0x00651598-0x0065159f]
+68 __globvars_MOD_ebfmin [0x00651590-0x00651597]
+69 __globvars_MOD_kondo_exp [0x00651518-0x0065151f]
+70 __globvars_MOD_errorflag [0x00651578-0x0065157b]
+71 __globvars_MOD_clonemax [0x006515d0-0x006515d3]
+72 __globvars_MOD_basis [0x006515f0-0x006515f4]
+73 __globvars_MOD_eps_sb [0x00651580-0x00651587]
+74 __globvars_MOD_in_pes [0x00651530-0x00651533]
+75 __globvars_MOD_sigq [0x006514a8-0x006514af]
+76 __globvars_MOD_cloneflg [0x006515d8-0x006515dd]
+77 __globvars_MOD___def_init_globvars_Hamiltonian [0x00448860-0x004488b7]
+78 __globvars_MOD_wmax_exp [0x00651440-0x00651447]
+79 __globvars_MOD_freqflg_sb [0x00651560-0x00651563]
+80 __globvars_MOD_reptot [0x006514bc-0x006514bf]
+81 __globvars_MOD_qss [0x006514c4-0x006514c7]
+82 __globvars_MOD_cmprss [0x006515cc-0x006515cc]
+83 __globvars_MOD_dissen_mp [0x006515b8-0x006515bf]
+84 __globvars_MOD_gam [0x00651558-0x0065155f]
+85 __globvars_MOD_conjflg [0x006515c8-0x006515cb]
+86 __globvars_MOD_timeend [0x00651478-0x0065147f]
+87 _IO_stdin_used [0x00448120-0x00448123]
+88 __globvars_MOD_freq_hp [0x00651570-0x00651577]
+89 __globvars_MOD_sigp [0x006514b0-0x006514b7]
+90 __globvars_MOD_thresh [0x00651480-0x00651487]
+91 __globvars_MOD_freq_mp [0x00651568-0x0065156f]
+92 __globvars_MOD_wmax_dl [0x00651448-0x0065144f]
+93 __globvars_MOD_sys [0x00651488-0x00651489]
+
+EVENT_TYPE
+9    40000018    Tracing mode:
+VALUES
+1      Detailed
+2      CPU Bursts
+
+

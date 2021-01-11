@@ -1,0 +1,18 @@
+
+First, load TAU 
+% module load workshop/Unite
+
+% export TAU_MAKEFILE=$TAU/Makefile.tau-icpc-papi-mpi-pdt
+% make
+
+% qsub -I -l ncpus=4
+% mpirun.lsf ./ring
+% paraprof
+
+
+To trace:
+% export TAU_MAKEFILE=$TAU/Makefile.tau-icpc-papi-mpi-pdt-scorep
+% mpirun.lsf ./ring
+% cd scorep-<id>;
+% vampir traces.otf2 
+

@@ -1,0 +1,46 @@
+To use TAU with Sweep3d modify the Makefile and uncomment the following 
+lines to use tau_f90.sh and tau_cc.sh as the names of the compilers.
+FC = mpif90
+#FC = tau_f90.sh
+
+CC=mpif90
+#CC = tau_cc.sh
+
+Next, set an environment variable:
+% setenv TAU_MAKEFILE $TAULIBDIR/Makefile.tau-mpi-pdt-pgi
+
+% make
+% qsub -I -V; mpirun -np 6 ./sweep3d.mpi
+% paraprof
+
+Generates profiles.  To generate traces, use:
+
+% setenv TAU_MAKEFILE  $TAULIBDIR/Makefile.tau-mpi-pdt-pgi
+
+
+to choose a stub makefile with PAPI counter support. 
+% rm  sweep3d.mpi
+% make
+
+Select counters:
+% setenv TAU_METRICS TIME:PAPI_FP_INS:PAPI_L1_DCM
+
+Then, run the program:
+% mpirun -np 6 ./sweep3d.mpi
+
+It creates traces and event definition files (.trc, .edf) that should be merged. 
+% tau_treemerge.pl
+This creates a single tau.trc and tau.edf file.  Convert it to the Vampir format:
+% tau2otf tau.trc tau.edf sweep.otf
+% vampir sweep.otf
+
+Select Global Displays -> Timeline. Then, zoom in to a segment of a timeline. Choose 
+Global Displays -> Counter timeline. Right click and select another counter such as 
+Counter -> TAU Counter Data-> PAPI_TOT_CYC.
+Select a single process in the global timeline by clicking on it and then choose
+Process Displays -> Calltree to see its calltree. 
+Also, Preferences -> Color styles -> Activities will help you choose a different
+color for a function. 
+
+
+For information about Sweep3D, please refer to README.SWEEP3D

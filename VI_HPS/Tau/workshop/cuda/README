@@ -1,0 +1,6 @@
+nvidia-smi -L
+
+make
+make run
+pprof
+

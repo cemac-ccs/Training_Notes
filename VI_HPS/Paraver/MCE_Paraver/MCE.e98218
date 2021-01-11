@@ -1,0 +1,3 @@
+Extrae: WARNING! omp_get_thread_num_real is a NULL pointer. Did the initialization of this module trigger? Retrying initialization...
+Extrae: Environment variable TRACE_NAME is not defined!
+   Seed   2653152890615404153
