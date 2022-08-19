@@ -1,0 +1,87 @@
+It is necessary to view performance data on the login nodes (where X is available). You may compile on either login or the compute node.
+
+
+Try compiling the code without any instrumentation. 
+mpif90 matmult.f90 -o matmult  -g
+
+Launch the job on the compute node:
+
+llsubmit run.ll 
+
+To use TAU to instrument at the routine level:
+
+export TAU_MAKEFILE=$TAU/Makefile.tau-icpc-papi-mpi-pdt
+tau_f90.sh matmult.f90 -o matmult
+On the compute node:
+llsubmit ./matmult
+
+On the login node:
+paraprof
+
+To try runtime preloading:
+mpif90 matmult.f90 -o matmult
+llsubmit tau_exec ./matmult
+paraprof
+
+To use PAPI to measure hardware performance counters:
+export TAU_MAKEFILE=$TAU/Makefile.tau-icpc-papi-mpi-pdt
+export TAU_METRICS=TIME:PAPI_FP_INS:PAPI_L1_DCM
+rm -rf profile.*
+(it is important to delete the old profile data before running a new experiment)
+
+make F90=tau_f90.sh
+llsubmit ./matmult
+paraprof
+
+
+To use Loop-level instrumentation:
+export TAU_OPTIONS='-optTauSelectFile=select.tau -optVerbose'
+make  F90=tau_f90.sh
+(OR simply invoke the compiler: 
+tau_f90.sh matmult.f90 -o matmult
+)
+llsubmit ./matmult
+pprof
+or 
+paraprof
+
+To use compiler based instrumentation:
+
+export TAU_OPTIONS='-optCompInst -optVerbose'
+tau_f90.sh matmult.f90 -o matmult
+
+OR 
+tauf90 matmult.f90 -o matmult
+(tauf90 is a shorthand for tau_f90.sh -tau_options=-optCompInst )
+
+
+To see communication matrix display:
+export TAU_COMM_MATRIX=1
+llsubmit run.ll
+paraprof
+Windows -> Communication Matrix
+
+To see callpath profiling:
+export TAU_CALLPATH=1
+export TAU_CALLPATH_DEPTH=100
+llsubmit run.ll
+paraprof
+
+
+To see the extent of heap memory allocation or deallocation:
+mpif90 matmult.f90 -o matmult
+(or use an instrumented executable)
+llsubmit tau_exec -memory ./matmult
+(or llsubmit tau_exec -T icpc,mpi,pdt -memory ./matmult)
+paraprof
+Right click on a node -> Show Context Event Window and observe the allocations and deallocations. 
+
+To use binary rewriting (beta) capabilities in TAU:
+mpif90 matmult.f90 -o matmult -g
+Using MAQAO (tau_rewrite): 
+tau_rewrite -T icpc,papi,mpi,pdt matmult -o matmult.i
+llsubmit run.ll
+(NOTE: We use the instrumented output fule matmult.i) 
+pprof
+
+Please see ../handson.txt file.

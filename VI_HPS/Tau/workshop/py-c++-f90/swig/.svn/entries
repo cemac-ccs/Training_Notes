@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="1"
+   name=""
+   committed-date="2007-03-01T00:42:58.429863Z"
+   url="svn+ssh://army251.arc.nasa.gov/samarc/trunk/SAMARC/python/swig"
+   last-author="wissink"
+   kind="dir"
+   uuid="3e371556-922a-0410-bb22-a091baf97e2e"
+   revision="45"/>
+<entry
+   committed-rev="1"
+   name="samint.i"
+   text-time="2007-04-11T20:59:39.000000Z"
+   committed-date="2007-03-01T00:42:58.429863Z"
+   checksum="4ee18f6038cfcc19314484c8c07fa390"
+   last-author="wissink"
+   kind="file"
+   prop-time="2007-04-11T20:59:39.000000Z"/>
+<entry
+   committed-rev="1"
+   name="Makefile"
+   text-time="2007-04-11T20:59:39.000000Z"
+   committed-date="2007-03-01T00:42:58.429863Z"
+   checksum="c6e0b974ff5a9e8c2533ab497facd6ca"
+   last-author="wissink"
+   kind="file"
+   prop-time="2007-04-11T20:59:39.000000Z"/>
+</wc-entries>

@@ -1,0 +1,18 @@
+#!/bin/sh
+#PBS -l walltime=00:10:00
+#PBS -l select=1:node_type=rome:mpiprocs=27
+#PBS -j oe
+
+
+# Change to directory the job was submitted from
+cd $PBS_O_WORKDIR
+
+# Load required modules
+module load openmpi 
+module load extrae
+
+export TRACE_NAME=lulesh2.0_openmpi_27p.prv
+
+# Run on 27 processes
+mpirun -np 27 ./trace.sh ../apps/lulesh2.0_openmpi -i 10 -s 65 -p 
+

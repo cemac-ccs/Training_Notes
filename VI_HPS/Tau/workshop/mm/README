@@ -1,0 +1,47 @@
+This example can be used on one or more cores using MPI, pthread, OpenMP or with a hybrid MPI+<thread> runtime. It features a selective instrumentation file that uses outer-loop level instrumentation in two routines. 
+
+To use compiler based instrumentation:
+% source /projects/tau/tau.bashrc
+$export TAU_MAKEFILE=$TAU/Makefile.tau-icpc-papi-mpi-pdt
+$ export TAU_OPTIONS='-optCompInst -optVerbose'
+$ make
+
+To use OpenMP
+ls $TAU/Makefile* 
+/projects/tau/tau_latest/x86_64/lib/Makefile.tau-icpc-mpi-pdt
+/projects/tau/tau_latest/x86_64/lib/Makefile.tau-icpc-mpi-pdt-openmp-opari
+/projects/tau/tau_latest/x86_64/lib/Makefile.tau-icpc-mpi-pthread-pdt
+/projects/tau/tau_latest/x86_64/lib/Makefile.tau-icpc-papi-mpi-pdt
+/projects/tau/tau_latest/x86_64/lib/Makefile.tau-icpc-papi-mpi-pdt-openmp
+/projects/tau/tau_latest/x86_64/lib/Makefile.tau-mvapich2-icpc-mpi-pdt
+/projects/tau/tau_latest/x86_64/lib/Makefile.tau-mvapich2-icpc-mpi-pdt-openmp-opari
+/projects/tau/tau_latest/x86_64/lib/Makefile.tau-mvapich2-icpc-mpi-pthread-pdt
+/projects/tau/tau_latest/x86_64/lib/Makefile.tau-mvapich2-icpc-papi-mpi-pdt
+/projects/tau/tau_latest/x86_64/lib/Makefile.tau-mvapich2-icpc-papi-mpi-pdt-openmp
+/projects/tau/tau_latest/x86_64/lib/Makefile.tau-mvapich2-ompt-icpc-papi-mpi-pdt-openmp
+/projects/tau/tau_latest/x86_64/lib/Makefile.tau-mvapich2-phase-icpc-papi-mpi-pdt
+/projects/tau/tau_latest/x86_64/lib/Makefile.tau-ompt-icpc-papi-mpi-pdt-openmp
+/projects/tau/tau_latest/x86_64/lib/Makefile.tau-phase-icpc-papi-mpi-pdt
+
+
+
+export TAU_MAKEFILE=$TAU/Makefile.tau-icpc-mpi-pdt-openmp-opari
+
+
+for an OpenMP example:
+make
+export OMP_NUM_THREADS=4
+./matmult
+
+-bash-4.1$ ls prof*
+profile.0.0.0  profile.0.0.1  profile.0.0.2  profile.0.0.3
+
+
+To use event based sampling in TAU:
+export TAU_SAMPLING=1
+./matmult
+pprof
+
+pprof
+paraprof
+

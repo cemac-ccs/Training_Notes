@@ -1,0 +1,45 @@
+First, use:
+% source /usr/global/tools/tau/training/tau.cshrc (or bashrc)
+
+To use without TAU:
+   mpirun -np 4 pyMPI ./samarcrun.py
+
+To use with TAU:
+% ls $TAU/bindings*
+/usr/global/tools/tau/training//tau_latest/x86_64/lib/bindings-icpc-mpi-python-pdt:
+/usr/global/tools/tau/training//tau_latest/x86_64/lib/bindings-icpc-python-pdt:
+
+
+Let us choose a PYTHONPATH with the MPI bindings because this is an MPI application and run the example using a wrapper script for Python instrumentation.
+
+We are also interested in instrumenting the MPI calls from pyMPI using runtime interposition of MPI library using tau_exec:
+
+   setenv PYTHONPATH $TAU/bindings-icpc-mpi-python-pdt\:$PYTHONPATH
+   mpirun -np 4 tau_exec pyMPI ./wrapper.py
+
+   pprof -a | more
+
+or 
+   paraprof 
+
+or
+   paraprof --pack py.ppk; <move py.ppk to your desktop> ; paraprof py.ppk
+
+To use TAU instrumentation inside the shared objects, please set the TAU_MAKEFILE and compile the application with the TAU compiler scripts:
+
+1. Choosing the correct TAU Stub Makefile:
+% ls $TAU/Makefile*python*
+/usr/global/tools/tau/training//tau_latest/x86_64/lib/Makefile.tau-icpc-mpi-python-pdt
+/usr/global/tools/tau/training//tau_latest/x86_64/lib/Makefile.tau-icpc-python-pdt
+
+We choose the Python stub with MPI in its name:
+% cd ..
+% setenv TAU_MAKEFILE /usr/global/tools/tau/training//tau_latest/x86_64/lib/Makefile.tau-icpc-mpi-python-pdt
+% make  CC=tau_cc.sh CXX=tau_cxx.sh F90=tau_f90.sh 
+% cd example
+% mpirun -np 4 tau_exec pyMPI ./wrapper.py
+% pprof -a | more
+% paraprof
+
+Now all the internal routines within the shared objects are also instrumented. 
+

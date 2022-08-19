@@ -1,0 +1,2 @@
+#!/bin/bash
+srun -n 1 tau_python ./samarcrun.py

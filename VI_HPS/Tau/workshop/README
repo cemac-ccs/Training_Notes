@@ -1,0 +1,54 @@
+This directory contains some example codes for use in the TAU workshop. 
+-----------------------------------------------------------------------
+
+NOTE 1: Before starting, please use on Hawk at HLRS: 
+
+% module load tau
+to set the environment variables.
+
+This will set up the modules and paths for this workshop. 
+
+To run the jobs simply use:
+
+qsub -I -l select=1:mpiprocs=128 -l walltime=01:30:00 -q R_tw
+to allocate a single node on Hawk. 
+Use:
+module load tau
+
+to use the Intel MPI module. If you need to switch to the default MPT/gcc module:
+module unload intel impi
+module load gcc/9.2 mpt
+
+Please follow along the hands-on using the handson.txt file. Also, 
+we recommend reading the README file in each subdirectory and trying the 
+commands to generate and analyze the data. 
+
+1) NPB3.3-MZ-MPI - hybrid MPI and OpenMP Fortran codes.
+2) matmult - a simple Fortran MPI program for matrix multiplication.
+3) CoMD  - an MPI and MPI+OpenMP code written in C. 
+4) kokkos - feint and fixture examples from Kokkos to illustrate TAU's Kokkos profiling interface.
+5) miniFE - a Finite Element mini-application written in C, C++, MPI, and OpenMP.
+6) debug - an example that illustrates TAU's callstack debugging features.
+7) cuda - a simple example that shows TAU's CUPTI support. 
+8) hip and opencl - a set of  HIP and OpenCL examples for ROCm. 
+9) mm - a C MPI+OpenMP example. 
+10) mpiposix - shows I/O instrumentation in a MPI code written in C.
+11) cthreads - C example demonstrating instrumentation with MPI+pthreads
+12) mpic++ - a simple C++ MPI program for sending a message in a ring.
+13) papi - a simple matrix multiple kernel for showing loop level instrumentation.
+For further information, please visit the TAU webpage:
+http://tau.uoregon.edu
+
+NOTE 3:
+These examples assume tcsh/csh as your shell. If you are using bash, please use:
+
+% export TAU_MAKEFILE=<value>
+% export PATH=$PATH:<dir>
+
+instead of 
+
+% setenv TAU_MAKEFILE <value>
+% set path=($path <dir>)
+
+
+- Sameer Shende (sameer@paratools.com)

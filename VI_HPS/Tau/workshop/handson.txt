@@ -1,0 +1,91 @@
+On hawk (HLRS)
+qsub -I -l select=1:mpiprocs=128 -l walltime=00:30:00 -q R_tw
+cd NPB3.3-MZ-MPI; make clean; make suite; cd bin
+Uninstrumented:
+./r
+With TAU:
+./rt
+pprof -a | more
+paraprof --pack bt.ppk
+scp to your laptop and open in paraprof:
+paraprof bt.ppk &
+
+NOTE: This assumes you have installed TAU on your laptop. Instructions for doing this are included in the file:
+-----
+laptop.txt 
+cat laptop.txt 
+and in the slides:
+http://tau.uoregon.edu/TAU_TW35_handson.pdf
+
+With event-based sampling (EBS): 
+cat ./rt1.sh
+./rt1.sh
+With Tracing (OTF2):
+./clean.sh
+cat ./rt2.sh
+./rt2.sh
+vampir traces.otf2 & 
+
+For a C/C++ example with MPI and/or MPI+OpenMP:
+cd ../../CoMD
+cd src-mpi
+make clean
+make
+cd ../src-openmp
+make clean
+make
+
+cd ../bin
+Uninstrumented:
+cat r.sh 
+./r.sh
+With TAU:
+./rt.sh
+pprof -a | more
+
+./clean.sh
+To use ompt:
+Uninstrumented:
+cat ro.sh
+./ro.sh
+With TAU:
+cat rompt.sh
+./rompt.sh
+pprof -a | more
+paraprof --pack comd.ppk
+(scp comd.ppk and open locally:) 
+paraprof comd.ppk & 
+
+With TAU and OTF2:
+./rtompt.sh
+
+To use Jumpshot:
+export TAU_TRACE=1
+unset TAU_TRACE_FORMAT
+launch the job
+tau_treemerge.pl
+After invoking tau_treemerge.pl and generating a unified tau.trc trace file and the tau.edf event definition file, we may use:
+tau2slog2 tau.trc tau.edf -o app.slog2
+jumpshot app.slog2 &
+
+To use Chrome:
+bash-4.2$ tau_trace2json
+Usage: tau_trace2json <TAU trace> <edf file> [-nostate] [-nomessage] [-v] [-nojson] [-chrome] [-ignoreatomic] [-o filename.json] [-print]
+
+After invoking tau_treemerge.pl and generating a unified tau.trc trace file and the tau.edf event definition file, we may use:
+
+tau_trace2json tau.trc tau.edf -chrome -ignoreatomic -o matmult.json
+
+scp this matmult.json to your laptop and launch Chrome and enter in the location bar:
+chrome://tracing
+Load -> matmult.json
+
+To use Vampir:
+
+export TAU_TRACE=1
+export TAU_TRACE_FORMAT=otf2
+launch the job and then:
+
+vampir  traces.otf & 
+Click on the timeline display
+

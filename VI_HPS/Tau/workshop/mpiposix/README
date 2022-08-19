@@ -1,0 +1,7 @@
+This example illustrates the use of TAU_OPTIONS -optTrackIO that interposes the
+TAU I/O wrapper library using linker-based instrumentation (-Wl,-wrap,read etc.)
+calls. Setting the TAU_TRACK_IO_PARAMS=1 tracks the arguments that flow through these calls as atomic events. 
+
+mpirun.lsf ./foo
+paraprof
+Right click on a given node (node 1 say) and choose Show User Event Window. Expand the compressed tree nodes to see the I/O.

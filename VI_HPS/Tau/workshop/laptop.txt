@@ -1,0 +1,26 @@
+To install TAU locally on your laptop:
+Microsoft Windows
+=================
+ Install Java from Oracle.com 
+http://tau.uoregon.edu/tau.exe
+Install, click on a ppk file to launch paraprof
+
+macOS
+=====
+Install Java 11.0.3:
+Download http://tau.uoregon.edu/java.dmg
+If you have multiple Java installations, add to your ~/.zshrc (or ~/.bashrc as appropriate):
+export PATH=/Library/Java/JavaVirtualMachines/jdk-11.0.3.jdk/Contents/Home/bin:$PATH
+java -version
+Download and install TAU (copy to /Applications from dmg):
+http://tau.uoregon.edu/tau.dmg  
+export PATH=/Applications/TAU/tau/apple/bin:$PATH
+paraprof  app.ppk &  
+
+Linux 
+=====
+Download http://tau.uoregon.edu/tau.tgz
+tar xf tau.tgz; cd tau-2.*; 
+./configure; make install; export PATH=<taudir>/x86_64/bin:$PATH
+paraprof app.ppk & 
+

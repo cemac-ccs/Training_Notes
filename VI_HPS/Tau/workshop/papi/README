@@ -1,0 +1,42 @@
+This example describes how to instrument outer-loops in C. 
+
+1) This is a sequential program, so let us choose a stub makefile that does
+not have a -mpi in its name for the Intel compiler.
+
+
+-bash-4.1$ ls $TAU/Makefile* | grep -v mpi 
+/projects/tau/tau_latest/x86_64/lib/Makefile.tau-icpc-papi-pdt-openmp-opari
+
+Let us choose the top one with -pdt for autoinstrumentation and -papi for hardware performance counters:
+export TAU_MAKEFILE=$TAU/Makefile.tau-icpc-papi-pdt-openmp-opari
+
+
+2) Let us instruct it to instrument the loop:
+% cat select.tau
+BEGIN_INSTRUMENT_SECTION
+loops routine="#" 
+END_INSTRUMENT_SECTION
+
+And pass this instrumentation specification file to TAU. This can be done by
+export TAU_OPTIONS='-optTauSelectFile=select.tau -optVerbose'
+(see tau_compiler.sh for a full list)
+or in the Makefile, as 
+CC = tau_cc.sh -tau_options='-optTauSelectFile=select.tau -optVerbose'
+
+3) Build it
+% make
+
+4) Execute the program
+papi_avail 
+shows the list of counters
+papi_event_chooser PRESET PAPI_FP_INS
+shows the list of counters that are compatible with PAPI Floating Point Instructions counter (PAPI_FP_INS). We see that PAPI_L1_DCM (for capturing level 1 data cache misses) is available. To use it, we set the TAU_METRICS environment variable:
+export TAU_METRICS=TIME:PAPI_FP_INS:PAPI_L1_DCM
+./loop_test
+
+5) Examine the profile:
+pprof -f MULTI__PAPI_FP_INS/profile  | more
+for floating point instructions (you may also cd to the metric dir and use pprof)
+pprof -f MULTI__PAPI_L1_DCM/profile  | more
+for the L1 data cache misses.
+

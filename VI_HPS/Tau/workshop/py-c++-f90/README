@@ -1,0 +1,22 @@
+This example demonstrates the construction of a parallel scientific application
+using Pyton with F90 and C/C++ with MPI using shared objects. 
+To compile this code:
+% source /home/sshende/apps/tau.cshrc (or bashrc)
+
+To build this example, we need a working pyMPI. It was not found on CX1. TAU needs to be built with MPI and -pythoninc=<dir> configuration option. This specifies the location of the Python.h header directory.
+% make
+this should build _samint.so
+% cd example
+and see the README file in the example directory on how to run the code with 
+and without TAU. 
+
+To build this with TAU instrumentation at C,C++, F90 level as well, you may 
+set:
+
+% setenv TAU_MAKEFILE $TAU/Makefile.tau-icpc-mpi-python-pdt
+
+% make clean
+% make F90=tau_f90.sh CC=tau_cc.sh CXX=tau_cxx.sh
+
+
+Additional notes are in README.andy

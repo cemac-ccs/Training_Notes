@@ -1,0 +1,2 @@
+#!/bin/bash
+tau_exec -T cupti,serial -cupti ./matmult

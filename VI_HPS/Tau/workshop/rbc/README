@@ -1,0 +1,9 @@
+This example illustrates TAU based source instrumentation and capturing the
+errant runtime bounds violation using the TAU_MEMDBG_PROTECT_ABOVE environment
+variable. 
+
+make
+llsubmit run.ll
+
+paraprof -d 
+paraprof
